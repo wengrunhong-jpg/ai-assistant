@@ -1,0 +1,13 @@
+.idea/
+
+# Claude相关文件
+CLAUDE.md
+
+# 其他常见忽略文件
+*.log
+*.tmp
+.DS_Store
+node_modules/
+__pycache__/
+*.pyc
+.env" > .gitignore
