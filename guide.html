@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="实时翻译助手使用指南，帮助您快速掌握翻译工具的使用方法">
+    <title>使用指南 | 实时翻译助手</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="page-wrapper">
+        <!-- ===== Header 页头 ===== -->
+        <header class="site-header">
+            <div class="header-content">
+                <div class="logo-section">
+                    <div class="logo-icon">🌐</div>
+                    <div>
+                        <h1 class="site-title">实时翻译助手</h1>
+                        <p class="site-subtitle">Real-time Translation Assistant</p>
+                        <p class="header-time" id="headerTime">--</p>
+                    </div>
+                </div>
+                <div class="header-actions">
+                    <div class="theme-toggle-wrapper">
+                        <span class="theme-toggle-icon">☀️</span>
+                        <button class="theme-toggle" id="themeToggle" title="切换深色/浅色模式"></button>
+                        <span class="theme-toggle-icon">🌙</span>
+                    </div>
+                    <a href="index.html" class="btn btn-primary">开始翻译</a>
+                    <a href="about.html" class="btn btn-outline">关于我们</a>
+                </div>
+            </div>
+        </header>
+
+        <!-- ===== Nav 导航栏 ===== -->
+        <nav class="main-nav">
+            <div class="nav-container">
+                <ul class="nav-list">
+                    <li class="nav-item">
+                        <a href="index.html" class="nav-link">🏠 首页</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="index.html#tool" class="nav-link">🔤 翻译工具</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="index.html#feedback" class="nav-link">💬 用户反馈</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="guide.html" class="nav-link active">📖 使用指南</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="about.html" class="nav-link">ℹ️ 关于我们</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle">
+                            ⚙️ 更多
+                            <span class="dropdown-arrow">▼</span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#" class="dropdown-item">📄 API文档</a></li>
+                            <li><a href="index.html#feedback" class="dropdown-item">💬 反馈建议</a></li>
+                            <li><a href="#" class="dropdown-item">🔧 设置</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- ===== Main 主要内容 ===== -->
+        <main class="main-content">
+            <div class="container">
+                <!-- 页面标题 -->
+                <div class="page-header">
+                    <h1 class="page-title">使用指南</h1>
+                    <p class="page-description">快速掌握实时翻译助手的使用方法</p>
+                </div>
+
+                <!-- 视频教程 -->
+                <section class="content-card">
+                    <h2>📹 视频教程</h2>
+                    <p>观看以下视频教程，快速了解实时翻译助手的核心功能和操作流程：</p>
+
+                    <div class="media-container">
+                        <video controls width="100%" style="max-width: 800px; margin: 0 auto; border-radius: 12px;">
+                            <source src="videos/tutorial.mp4" type="video/mp4">
+                            您的浏览器不支持视频元素。
+                        </video>
+                        <p class="media-caption">▲ 实时翻译助手使用教程</p>
+                    </div>
+                </section>
+
+                <!-- 分步骤使用教程 -->
+                <section class="content-card">
+                    <h2>🚀 快速开始</h2>
+                    <p>按照以下简单步骤，即可开始使用实时翻译助手：</p>
+
+                    <div class="steps-grid">
+                        <div class="step-card">
+                            <div class="step-number">1</div>
+                            <h3 class="step-title">选择语言</h3>
+                            <p class="step-desc">在源语言下拉框中选择原文语言（或选择"自动检测"），在目标语言下拉框中选择翻译语言。</p>
+                        </div>
+                        <div class="step-card">
+                            <div class="step-number">2</div>
+                            <h3 class="step-title">输入文本</h3>
+                            <p class="step-desc">在左侧文本框中输入需要翻译的内容，支持最多 5000 个字符。右下角会实时显示字数统计。</p>
+                        </div>
+                        <div class="step-card">
+                            <div class="step-number">3</div>
+                            <h3 class="step-title">开始翻译</h3>
+                            <p class="step-desc">点击"开始翻译"按钮或使用快捷键 <kbd>Ctrl</kbd> + <kbd>Enter</kbd>，翻译结果将显示在右侧区域。</p>
+                        </div>
+                        <div class="step-card">
+                            <div class="step-number">4</div>
+                            <h3 class="step-title">复制结果</h3>
+                            <p class="step-desc">翻译完成后，点击"复制结果"按钮即可将翻译内容复制到剪贴板，方便粘贴使用。</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 支持的语言列表 -->
+                <section class="content-card">
+                    <h2>🌍 支持的语言</h2>
+                    <p>实时翻译助手目前支持以下语言之间的互译：</p>
+
+                    <div class="language-table-wrapper">
+                        <table class="language-table">
+                            <thead>
+                                <tr>
+                                    <th>语言</th>
+                                    <th>代码</th>
+                                    <th>原生名称</th>
+                                    <th>自动检测</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><span class="language-flag">🇨🇳</span><span class="language-name">中文</span></td>
+                                    <td><code>zh</code></td>
+                                    <td>中文（简体）</td>
+                                    <td>✅ 支持</td>
+                                </tr>
+                                <tr>
+                                    <td><span class="language-flag">🇬🇧</span><span class="language-name">英语</span></td>
+                                    <td><code>en</code></td>
+                                    <td>English</td>
+                                    <td>✅ 支持</td>
+                                </tr>
+                                <tr>
+                                    <td><span class="language-flag">🇯🇵</span><span class="language-name">日语</span></td>
+                                    <td><code>ja</code></td>
+                                    <td>日本語</td>
+                                    <td>✅ 支持</td>
+                                </tr>
+                                <tr>
+                                    <td><span class="language-flag">🇰🇷</span><span class="language-name">韩语</span></td>
+                                    <td><code>ko</code></td>
+                                    <td>한국어</td>
+                                    <td>✅ 支持</td>
+                                </tr>
+                                <tr>
+                                    <td><span class="language-flag">🇫🇷</span><span class="language-name">法语</span></td>
+                                    <td><code>fr</code></td>
+                                    <td>Français</td>
+                                    <td>✅ 支持</td>
+                                </tr>
+                                <tr>
+                                    <td><span class="language-flag">🇩🇪</span><span class="language-name">德语</span></td>
+                                    <td><code>de</code></td>
+                                    <td>Deutsch</td>
+                                    <td>✅ 支持</td>
+                                </tr>
+                                <tr>
+                                    <td><span class="language-flag">🇪🇸</span><span class="language-name">西班牙语</span></td>
+                                    <td><code>es</code></td>
+                                    <td>Español</td>
+                                    <td>✅ 支持</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- 快捷键说明 -->
+                <section class="content-card">
+                    <h2>⌨️ 快捷键</h2>
+                    <p>使用以下快捷键可以提高您的翻译效率：</p>
+
+                    <div class="shortcuts-grid">
+                        <div class="shortcut-item">
+                            <div class="shortcut-keys">
+                                <kbd>Ctrl</kbd>
+                                <span>+</span>
+                                <kbd>Enter</kbd>
+                            </div>
+                            <span class="shortcut-desc">快速触发翻译</span>
+                        </div>
+                        <div class="shortcut-item">
+                            <div class="shortcut-keys">
+                                <kbd>Ctrl</kbd>
+                                <span>+</span>
+                                <kbd>Shift</kbd>
+                                <span>+</span>
+                                <kbd>C</kbd>
+                            </div>
+                            <span class="shortcut-desc">复制翻译结果</span>
+                        </div>
+                        <div class="shortcut-item">
+                            <div class="shortcut-keys">
+                                <kbd>Ctrl</kbd>
+                                <span>+</span>
+                                <kbd>Shift</kbd>
+                                <span>+</span>
+                                <kbd>X</kbd>
+                            </div>
+                            <span class="shortcut-desc">清空输入和结果</span>
+                        </div>
+                        <div class="shortcut-item">
+                            <div class="shortcut-keys">
+                                <kbd>Ctrl</kbd>
+                                <span>+</span>
+                                <kbd>Shift</kbd>
+                                <span>+</span>
+                                <kbd>S</kbd>
+                            </div>
+                            <span class="shortcut-desc">交换源语言和目标语言</span>
+                        </div>
+                        <div class="shortcut-item">
+                            <div class="shortcut-keys">
+                                <kbd>←</kbd>
+                                <span>/</span>
+                                <kbd>→</kbd>
+                            </div>
+                            <span class="shortcut-desc">切换轮播图图片</span>
+                        </div>
+                        <div class="shortcut-item">
+                            <div class="shortcut-keys">
+                                <kbd>Esc</kbd>
+                            </div>
+                            <span class="shortcut-desc">关闭弹出提示</span>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 功能详解 -->
+                <section class="content-card">
+                    <h2>✨ 功能详解</h2>
+
+                    <h3>语言选择</h3>
+                    <p>支持中文、英语、日语、韩语、法语、德语、西班牙语等多种语言互译。每种语言都配有国旗图标，方便快速识别。</p>
+
+                    <h3>自动语言检测</h3>
+                    <p>当您不确定源语言时，可以选择"自动检测"功能。系统会自动识别输入文本的语言（支持中文、日语、韩语、英文等），并进行准确翻译。</p>
+
+                    <h3>语言交换</h3>
+                    <p>点击语言选择器中间的"⇄"按钮，可以快速交换源语言和目标语言，方便反向翻译。如果右侧已有翻译结果，会自动将其填入左侧进行反向翻译。</p>
+
+                    <h3>翻译历史</h3>
+                    <p>系统会自动保存最近 20 条翻译记录，方便您随时查看和复用之前的翻译结果。您也可以随时清空历史记录。</p>
+
+                    <h3>深色模式</h3>
+                    <p>点击页头右侧的 🌙/☀️ 开关，可以切换深色/浅色模式。系统会记住您的偏好设置，下次访问时自动应用。</p>
+                </section>
+
+                <!-- 常见问题 FAQ（折叠式） -->
+                <section class="content-card">
+                    <h2>❓ 常见问题</h2>
+                    <p>以下是用户常问的问题，点击问题可展开查看答案：</p>
+
+                    <div class="faq-list" id="faqList">
+                        <div class="faq-item">
+                            <button class="faq-question" type="button">
+                                <span class="faq-icon">💬</span>
+                                <span class="faq-question-text">翻译结果不准确怎么办？</span>
+                                <span class="faq-arrow">▼</span>
+                            </button>
+                            <div class="faq-answer">
+                                <div class="faq-answer-inner">
+                                    请确保输入文本语法正确、语句完整。对于专业术语，建议使用更通用的表达方式。您也可以尝试将长句拆分为多个短句分别翻译，这样通常能获得更准确的结果。此外，提供充足的上下文信息也有助于系统更好地理解语义。
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="faq-item">
+                            <button class="faq-question" type="button">
+                                <span class="faq-icon">📏</span>
+                                <span class="faq-question-text">支持翻译多长的文本？</span>
+                                <span class="faq-arrow">▼</span>
+                            </button>
+                            <div class="faq-answer">
+                                <div class="faq-answer-inner">
+                                    单次翻译最多支持 5000 个字符。如果文本较长，建议分段翻译。输入框右下角会实时显示当前字数和上限，当接近上限时字数会变为红色提醒。
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="faq-item">
+                            <button class="faq-question" type="button">
+                                <span class="faq-icon">⚡</span>
+                                <span class="faq-question-text">翻译速度慢怎么办？</span>
+                                <span class="faq-arrow">▼</span>
+                            </button>
+                            <div class="faq-answer">
+                                <div class="faq-answer-inner">
+                                    翻译速度受网络状况影响。请检查您的网络连接是否正常。如果网络正常但仍较慢，可能是服务器繁忙，请稍后重试。建议使用较短的文本进行翻译以获得更快的响应速度。
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="faq-item">
+                            <button class="faq-question" type="button">
+                                <span class="faq-icon">📋</span>
+                                <span class="faq-question-text">如何复制翻译结果？</span>
+                                <span class="faq-arrow">▼</span>
+                            </button>
+                            <div class="faq-answer">
+                                <div class="faq-answer-inner">
+                                    翻译完成后，您可以点击结果区域下方的"复制结果"按钮将翻译内容复制到剪贴板。也可以使用快捷键 <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>C</kbd> 快速复制。复制成功后会显示绿色提示。
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="faq-item">
+                            <button class="faq-question" type="button">
+                                <span class="faq-icon">🔄</span>
+                                <span class="faq-question-text">如何反向翻译？</span>
+                                <span class="faq-arrow">▼</span>
+                            </button>
+                            <div class="faq-answer">
+                                <div class="faq-answer-inner">
+                                    点击两个语言选择器中间的"⇄"交换按钮，即可快速交换源语言和目标语言。如果右侧已有翻译结果，系统会自动将其填入左侧输入框并触发反向翻译。您也可以使用快捷键 <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>S</kbd>。
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="faq-item">
+                            <button class="faq-question" type="button">
+                                <span class="faq-icon">🌙</span>
+                                <span class="faq-question-text">如何切换深色模式？</span>
+                                <span class="faq-arrow">▼</span>
+                            </button>
+                            <div class="faq-answer">
+                                <div class="faq-answer-inner">
+                                    点击页面右上角的 🌙 月亮图标即可切换到深色模式，再次点击 ☀️ 太阳图标可切换回浅色模式。您的主题偏好会自动保存到本地存储，下次访问时会自动应用上次的设置。
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="faq-item">
+                            <button class="faq-question" type="button">
+                                <span class="faq-icon">📱</span>
+                                <span class="faq-question-text">支持哪些设备？</span>
+                                <span class="faq-arrow">▼</span>
+                            </button>
+                            <div class="faq-answer">
+                                <div class="faq-answer-inner">
+                                    实时翻译助手采用响应式设计，支持在桌面电脑、平板电脑和手机上使用。推荐使用 Chrome、Firefox、Safari、Edge 等主流现代浏览器访问，以获得最佳体验。
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="faq-item">
+                            <button class="faq-question" type="button">
+                                <span class="faq-icon">📜</span>
+                                <span class="faq-question-text">翻译历史保存在哪里？</span>
+                                <span class="faq-arrow">▼</span>
+                            </button>
+                            <div class="faq-answer">
+                                <div class="faq-answer-inner">
+                                    翻译历史保存在您浏览器的本地存储（LocalStorage）中，不会上传到服务器，保护您的隐私安全。最多保存 20 条最近的翻译记录。您可以随时点击"清空历史"按钮删除所有记录。
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 使用技巧 -->
+                <section class="content-card">
+                    <h2>💡 使用技巧</h2>
+                    <div class="features-grid">
+                        <div class="feature-card">
+                            <div class="feature-icon">📝</div>
+                            <h3 class="feature-title">简洁表达</h3>
+                            <p class="feature-desc">使用简洁明了的句子，避免复杂句式，翻译效果更佳</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon">🔍</div>
+                            <h3 class="feature-title">上下文完整</h3>
+                            <p class="feature-desc">提供完整的上下文信息，帮助系统更准确地理解语义</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon">✅</div>
+                            <h3 class="feature-title">校对检查</h3>
+                            <p class="feature-desc">翻译完成后，建议人工校对关键内容，确保准确性</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 反馈与支持 -->
+                <section class="content-card">
+                    <h2>📞 反馈与支持</h2>
+                    <p>如果您在使用过程中遇到问题，或有改进建议，欢迎联系我们：</p>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-top: 24px;">
+                        <div style="padding: 16px; background: var(--bg-secondary); border-radius: 8px; text-align: center;">
+                            <div style="font-size: 2rem; margin-bottom: 8px;">📧</div>
+                            <strong>邮件支持</strong>
+                            <p style="color: var(--text-secondary); margin-top: 8px;">support@translator.com</p>
+                        </div>
+                        <div style="padding: 16px; background: var(--bg-secondary); border-radius: 8px; text-align: center;">
+                            <div style="font-size: 2rem; margin-bottom: 8px;">💬</div>
+                            <strong>在线客服</strong>
+                            <p style="color: var(--text-secondary); margin-top: 8px;">7×24小时在线</p>
+                        </div>
+                        <div style="padding: 16px; background: var(--bg-secondary); border-radius: 8px; text-align: center;">
+                            <div style="font-size: 2rem; margin-bottom: 8px;">📋</div>
+                            <strong>提交工单</strong>
+                            <p style="color: var(--text-secondary); margin-top: 8px;">1个工作日内响应</p>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+
+        <!-- ===== Footer 页脚 ===== -->
+        <footer class="site-footer">
+            <div class="footer-content">
+                <div class="footer-main">
+                    <div class="footer-section">
+                        <h3>关于我们</h3>
+                        <p>实时翻译助手致力于提供最优质的翻译体验，让语言不再成为沟通的障碍。</p>
+                    </div>
+                    <div class="footer-section">
+                        <h3>快速链接</h3>
+                        <div class="footer-links">
+                            <a href="index.html">首页</a>
+                            <a href="guide.html">使用指南</a>
+                            <a href="about.html">关于我们</a>
+                        </div>
+                    </div>
+                    <div class="footer-section">
+                        <h3>联系我们</h3>
+                        <div class="footer-links">
+                            <a href="mailto:contact@translator.com">📧 contact@translator.com</a>
+                            <a href="tel:+8612345678900">📱 +86 123-4567-8900</a>
+                            <a href="#">💬 在线客服</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer-bottom">
+                    <p>© 2026 实时翻译助手 | Real-time Translation Assistant. All rights reserved.</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script src="js/translator.js"></script>
+    <script src="js/enhancements.js"></script>
+    <script>
+        // 深色模式切换及时钟
+        (function() {
+            var saved = localStorage.getItem('translator_theme') || 'light';
+            document.documentElement.setAttribute('data-theme', saved);
+            var toggle = document.getElementById('themeToggle');
+            if (toggle) {
+                toggle.classList.toggle('active', saved === 'dark');
+                toggle.addEventListener('click', function() {
+                    var current = document.documentElement.getAttribute('data-theme');
+                    var next = current === 'dark' ? 'light' : 'dark';
+                    document.documentElement.setAttribute('data-theme', next);
+                    localStorage.setItem('translator_theme', next);
+                    toggle.classList.toggle('active', next === 'dark');
+                });
+            }
+            var headerTime = document.getElementById('headerTime');
+            if (headerTime) {
+                function updateClock() {
+                    var now = new Date();
+                    var pad = function(n) { return String(n).padStart(2, '0'); };
+                    headerTime.textContent = now.getFullYear() + '-' + pad(now.getMonth()+1) + '-' + pad(now.getDate()) + ' ' + pad(now.getHours()) + ':' + pad(now.getMinutes()) + ':' + pad(now.getSeconds());
+                }
+                updateClock();
+                setInterval(updateClock, 1000);
+            }
+        })();
+
+        // FAQ 折叠面板功能
+        (function() {
+            var faqList = document.getElementById('faqList');
+            if (!faqList) return;
+
+            var faqItems = faqList.querySelectorAll('.faq-item');
+
+            faqItems.forEach(function(item) {
+                var questionBtn = item.querySelector('.faq-question');
+                if (!questionBtn) return;
+
+                questionBtn.addEventListener('click', function() {
+                    var isActive = item.classList.contains('active');
+
+                    // 关闭其他已展开的 FAQ
+                    faqItems.forEach(function(otherItem) {
+                        if (otherItem !== item) {
+                            otherItem.classList.remove('active');
+                        }
+                    });
+
+                    // 切换当前项
+                    if (isActive) {
+                        item.classList.remove('active');
+                    } else {
+                        item.classList.add('active');
+                    }
+                });
+            });
+        })();
+    </script>
+</body>
+</html>

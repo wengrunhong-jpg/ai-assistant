@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="了解实时翻译助手项目背景、团队信息和技术架构">
+    <title>关于我们 | 实时翻译助手</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="page-wrapper">
+        <!-- ===== Header 页头 ===== -->
+        <header class="site-header">
+            <div class="header-content">
+                <div class="logo-section">
+                    <div class="logo-icon">🌐</div>
+                    <div>
+                        <h1 class="site-title">实时翻译助手</h1>
+                        <p class="site-subtitle">Real-time Translation Assistant</p>
+                        <p class="header-time" id="headerTime">--</p>
+                    </div>
+                </div>
+                <div class="header-actions">
+                    <div class="theme-toggle-wrapper">
+                        <span class="theme-toggle-icon">☀️</span>
+                        <button class="theme-toggle" id="themeToggle" title="切换深色/浅色模式"></button>
+                        <span class="theme-toggle-icon">🌙</span>
+                    </div>
+                    <a href="index.html" class="btn btn-primary">开始翻译</a>
+                    <a href="guide.html" class="btn btn-outline">使用指南</a>
+                </div>
+            </div>
+        </header>
+
+        <!-- ===== Nav 导航栏 ===== -->
+        <nav class="main-nav">
+            <div class="nav-container">
+                <ul class="nav-list">
+                    <li class="nav-item">
+                        <a href="index.html" class="nav-link">🏠 首页</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="index.html#tool" class="nav-link">🔤 翻译工具</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="index.html#feedback" class="nav-link">💬 用户反馈</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="guide.html" class="nav-link">📖 使用指南</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="about.html" class="nav-link active">ℹ️ 关于我们</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle">
+                            ⚙️ 更多
+                            <span class="dropdown-arrow">▼</span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#" class="dropdown-item">📄 API文档</a></li>
+                            <li><a href="index.html#feedback" class="dropdown-item">💬 反馈建议</a></li>
+                            <li><a href="#" class="dropdown-item">🔧 设置</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- ===== Main 主要内容 ===== -->
+        <main class="main-content">
+            <div class="container">
+                <!-- 页面标题 -->
+                <div class="page-header">
+                    <h1 class="page-title">关于我们</h1>
+                    <p class="page-description">了解实时翻译助手的故事、愿景和技术</p>
+                </div>
+
+                <!-- 项目介绍 -->
+                <section class="content-card">
+                    <h2>🎯 项目背景</h2>
+                    <p>实时翻译助手是一个致力于打破语言障碍的智能翻译工具。我们相信，语言不应该是沟通的壁垒，而是连接世界的桥梁。</p>
+                    <p>在全球化日益深入的今天，跨语言交流变得越来越频繁。无论是商务合作、学术研究，还是日常旅行，我们都需要一个可靠、快速、准确的翻译工具。实时翻译助手应运而生，旨在为用户提供无缝的多语言翻译体验。</p>
+
+                    <!-- GIF 动图展示 -->
+                    <div class="media-container">
+                        <img src="https://media.giphy.com/media/3o7TKSjRrfIPjeiVyM/giphy.gif" alt="翻译动画演示" loading="lazy" style="max-width: 400px; margin: 0 auto; border-radius: 12px;">
+                        <p class="media-caption">▲ 多语言翻译动画演示</p>
+                    </div>
+                </section>
+
+                <!-- 我们的愿景 -->
+                <section class="content-card">
+                    <h2>💡 我们的愿景</h2>
+                    <div class="features-grid">
+                        <div class="feature-card">
+                            <div class="feature-icon">🎯</div>
+                            <h3 class="feature-title">精准翻译</h3>
+                            <p class="feature-desc">通过深度学习和神经网络技术，提供接近人工翻译的准确度，让每一次翻译都值得信赖</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon">⚡</div>
+                            <h3 class="feature-title">极速响应</h3>
+                            <p class="feature-desc">毫秒级翻译响应，让跨语言交流如母语般流畅，告别漫长等待</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon">🌍</div>
+                            <h3 class="feature-title">全球覆盖</h3>
+                            <p class="feature-desc">支持多种主流语言互译，覆盖全球主要使用场景，让世界触手可及</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 技术架构 -->
+                <section class="content-card">
+                    <h2>🏗️ 技术架构</h2>
+                    <p>实时翻译助手采用先进的技术架构，确保翻译质量和用户体验。以下是我们的核心技术栈：</p>
+
+                    <!-- 技术栈标签 -->
+                    <div class="tech-tags">
+                        <span class="tech-tag tech-tag-html">🌐 HTML5</span>
+                        <span class="tech-tag tech-tag-css">🎨 CSS3</span>
+                        <span class="tech-tag tech-tag-js">⚡ JavaScript</span>
+                        <span class="tech-tag tech-tag-nlp">📝 NLP</span>
+                        <span class="tech-tag tech-tag-ai">🤖 AI / 深度学习</span>
+                        <span class="tech-tag tech-tag-cdn">🚀 CDN 加速</span>
+                        <span class="tech-tag tech-tag-svg">✨ SVG 动画</span>
+                    </div>
+
+                    <h3>技术栈详解</h3>
+                    <ul>
+                        <li><strong>前端技术：</strong>原生 HTML5 + CSS3 + JavaScript，无框架依赖，轻量高效，确保最佳性能表现</li>
+                        <li><strong>翻译引擎：</strong>基于 Transformer 架构的神经网络翻译模型，支持上下文语义理解</li>
+                        <li><strong>语言处理：</strong>自然语言处理（NLP）技术，准确理解上下文语境，提升翻译质量</li>
+                        <li><strong>性能优化：</strong>CDN 加速、本地缓存策略、异步加载等优化手段，确保极速响应</li>
+                        <li><strong>UI 设计：</strong>Flexbox 弹性布局 + CSS Grid 网格系统，响应式设计适配各种设备</li>
+                    </ul>
+                </section>
+
+                <!-- 视频展示 -->
+                <section class="content-card">
+                    <h2>🎬 产品功能演示</h2>
+                    <p>观看以下视频，快速了解实时翻译助手的核心功能和使用方法：</p>
+
+                    <div class="media-container">
+                        <video controls muted style="max-width: 100%; border-radius: 12px;">
+                            <source src="videos/demo.mp4" type="video/mp4">
+                            您的浏览器不支持视频播放。
+                        </video>
+                        <p class="media-caption">▲ 实时翻译助手功能演示视频</p>
+                    </div>
+                </section>
+
+                <!-- 团队介绍 -->
+                <section class="content-card">
+                    <h2>👥 团队介绍</h2>
+                    <p>我们是一支充满激情的技术团队，成员来自世界各地，拥有丰富的翻译和技术背景：</p>
+                    <div class="features-grid" style="margin-top: 24px;">
+                        <div class="feature-card" style="text-align: center;">
+                            <div class="feature-icon" style="margin: 0 auto 16px;">👨‍💻</div>
+                            <h3 class="feature-title">技术团队</h3>
+                            <p class="feature-desc">资深前端、后端、AI工程师，确保产品稳定高效</p>
+                        </div>
+                        <div class="feature-card" style="text-align: center;">
+                            <div class="feature-icon" style="margin: 0 auto 16px;">🌐</div>
+                            <h3 class="feature-title">语言专家</h3>
+                            <p class="feature-desc">多语种翻译专家，保证翻译质量和文化适应性</p>
+                        </div>
+                        <div class="feature-card" style="text-align: center;">
+                            <div class="feature-icon" style="margin: 0 auto 16px;">🎨</div>
+                            <h3 class="feature-title">设计团队</h3>
+                            <p class="feature-desc">UI/UX设计师，打造简洁美观的用户界面</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 用户反馈表单 -->
+                <section class="content-card" id="feedback">
+                    <h2>💬 给我们反馈</h2>
+                    <p>您的每一条反馈都是我们前进的动力。请告诉我们您的使用体验和改进建议：</p>
+
+                    <form id="aboutFeedbackForm" style="max-width: 600px; margin-top: 24px;">
+                        <div class="form-group">
+                            <label class="form-label" for="aboutName">您的姓名 <span style="color: var(--error-red);">*</span></label>
+                            <input type="text" class="form-input" id="aboutName" name="userName" placeholder="请输入您的姓名" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="aboutEmail">电子邮箱 <span style="color: var(--error-red);">*</span></label>
+                            <input type="email" class="form-input" id="aboutEmail" name="userEmail" placeholder="请输入您的邮箱地址" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="aboutFeedbackType">反馈类型</label>
+                            <select class="form-select" id="aboutFeedbackType" name="feedbackType">
+                                <option value="">请选择反馈类型</option>
+                                <option value="suggestion">💡 功能建议</option>
+                                <option value="bug">🐛 Bug报告</option>
+                                <option value="translation">🔤 翻译质量</option>
+                                <option value="other">📋 其他</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="aboutRating">满意度评分</label>
+                            <div class="rating-wrapper">
+                                <input type="range" class="rating-slider" id="aboutRating" name="rating" min="1" max="5" value="4" step="1">
+                                <span class="rating-value" id="ratingValue">4</span>
+                                <span class="rating-stars" id="ratingStars">⭐⭐⭐⭐</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="aboutContent">反馈内容 <span style="color: var(--error-red);">*</span></label>
+                            <textarea class="form-textarea" id="aboutContent" name="feedbackContent" placeholder="请详细描述您的反馈或建议..." rows="5" required></textarea>
+                        </div>
+
+                        <div class="text-center">
+                            <button type="submit" class="form-btn" style="width: 100%; max-width: 300px;">
+                                📨 提交反馈
+                            </button>
+                        </div>
+                    </form>
+
+                    <!-- 提交成功提示 -->
+                    <div class="form-success" id="aboutFormSuccess">
+                        <div class="form-success-icon">🎉</div>
+                        <h3>感谢您的反馈！</h3>
+                        <p>我们已收到您的宝贵建议，将认真对待每一条反馈。</p>
+                        <p style="margin-top: 12px; color: var(--text-muted);">您的意见将帮助我们变得更好！</p>
+                    </div>
+                </section>
+
+                <!-- 联系我们 -->
+                <section class="content-card">
+                    <h2>📞 联系我们</h2>
+                    <p>如果您有任何问题、建议或合作意向，欢迎通过以下方式联系我们：</p>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-top: 24px;">
+                        <div style="padding: 16px; background: var(--bg-secondary); border-radius: 8px; text-align: center;">
+                            <div style="font-size: 2rem; margin-bottom: 8px;">📧</div>
+                            <strong>邮箱</strong>
+                            <p style="margin-top: 8px; color: var(--text-secondary);">contact@translator.com</p>
+                        </div>
+                        <div style="padding: 16px; background: var(--bg-secondary); border-radius: 8px; text-align: center;">
+                            <div style="font-size: 2rem; margin-bottom: 8px;">📱</div>
+                            <strong>电话</strong>
+                            <p style="margin-top: 8px; color: var(--text-secondary);">+86 123-4567-8900</p>
+                        </div>
+                        <div style="padding: 16px; background: var(--bg-secondary); border-radius: 8px; text-align: center;">
+                            <div style="font-size: 2rem; margin-bottom: 8px;">📍</div>
+                            <strong>地址</strong>
+                            <p style="margin-top: 8px; color: var(--text-secondary);">北京市海淀区中关村</p>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+
+        <!-- ===== Footer 页脚 ===== -->
+        <footer class="site-footer">
+            <div class="footer-content">
+                <div class="footer-main">
+                    <div class="footer-section">
+                        <h3>关于我们</h3>
+                        <p>实时翻译助手致力于提供最优质的翻译体验，让语言不再成为沟通的障碍。</p>
+                    </div>
+                    <div class="footer-section">
+                        <h3>快速链接</h3>
+                        <div class="footer-links">
+                            <a href="index.html">首页</a>
+                            <a href="guide.html">使用指南</a>
+                            <a href="about.html">关于我们</a>
+                        </div>
+                    </div>
+                    <div class="footer-section">
+                        <h3>联系我们</h3>
+                        <div class="footer-links">
+                            <a href="mailto:contact@translator.com">📧 contact@translator.com</a>
+                            <a href="tel:+8612345678900">📱 +86 123-4567-8900</a>
+                            <a href="#">💬 在线客服</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer-bottom">
+                    <p>© 2026 实时翻译助手 | Real-time Translation Assistant. All rights reserved.</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- 背景音乐（自动播放，可静音） -->
+    <audio id="bgMusic" loop autoplay muted>
+        <source src="audios/background.mp3" type="audio/mpeg">
+        您的浏览器不支持音频元素。
+    </audio>
+
+    <!-- 音乐控制按钮 -->
+    <div id="musicControl" style="position: fixed; bottom: 20px; right: 20px; z-index: 1000;">
+        <button onclick="toggleMusic()" style="
+            background: var(--primary-blue);
+            color: white;
+            border: none;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            font-size: 1.25rem;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4);
+            transition: all 0.3s ease;
+        " title="切换音乐">
+            🔇
+        </button>
+    </div>
+
+    <script src="js/translator.js"></script>
+    <script src="js/enhancements.js"></script>
+    <script>
+        // 深色模式切换
+        (function() {
+            const saved = localStorage.getItem('translator_theme') || 'light';
+            document.documentElement.setAttribute('data-theme', saved);
+            const toggle = document.getElementById('themeToggle');
+            if (toggle) {
+                toggle.classList.toggle('active', saved === 'dark');
+                toggle.addEventListener('click', function() {
+                    const current = document.documentElement.getAttribute('data-theme');
+                    const next = current === 'dark' ? 'light' : 'dark';
+                    document.documentElement.setAttribute('data-theme', next);
+                    localStorage.setItem('translator_theme', next);
+                    toggle.classList.toggle('active', next === 'dark');
+                });
+            }
+            // 时钟
+            const headerTime = document.getElementById('headerTime');
+            if (headerTime) {
+                function updateClock() {
+                    const now = new Date();
+                    const pad = n => String(n).padStart(2, '0');
+                    headerTime.textContent = now.getFullYear() + '-' + pad(now.getMonth()+1) + '-' + pad(now.getDate()) + ' ' + pad(now.getHours()) + ':' + pad(now.getMinutes()) + ':' + pad(now.getSeconds());
+                }
+                updateClock();
+                setInterval(updateClock, 1000);
+            }
+        })();
+
+        // 音乐控制
+        let isMusicPlaying = false;
+
+        function toggleMusic() {
+            const audio = document.getElementById('bgMusic');
+            const btn = document.querySelector('#musicControl button');
+
+            if (isMusicPlaying) {
+                audio.muted = true;
+                btn.textContent = '🔇';
+                isMusicPlaying = false;
+            } else {
+                audio.muted = false;
+                btn.textContent = '🔊';
+                isMusicPlaying = true;
+            }
+        }
+
+        // 页面加载时尝试播放音乐（需要用户交互）
+        document.addEventListener('click', function initAudio() {
+            const audio = document.getElementById('bgMusic');
+            audio.muted = false;
+            isMusicPlaying = true;
+            document.querySelector('#musicControl button').textContent = '🔊';
+            document.removeEventListener('click', initAudio);
+        }, { once: true });
+
+        // 评分滑块实时更新
+        (function() {
+            const slider = document.getElementById('aboutRating');
+            const valueEl = document.getElementById('ratingValue');
+            const starsEl = document.getElementById('ratingStars');
+
+            if (slider && valueEl && starsEl) {
+                function updateRating() {
+                    const val = parseInt(slider.value);
+                    valueEl.textContent = val;
+                    starsEl.textContent = '⭐'.repeat(val);
+                }
+                slider.addEventListener('input', updateRating);
+                updateRating();
+            }
+        })();
+
+        // about 页面反馈表单处理
+        (function() {
+            const form = document.getElementById('aboutFeedbackForm');
+            const successEl = document.getElementById('aboutFormSuccess');
+            if (!form) return;
+
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                const formData = {
+                    userName: document.getElementById('aboutName')?.value?.trim(),
+                    userEmail: document.getElementById('aboutEmail')?.value?.trim(),
+                    feedbackType: document.getElementById('aboutFeedbackType')?.value,
+                    rating: document.getElementById('aboutRating')?.value,
+                    feedbackContent: document.getElementById('aboutContent')?.value?.trim()
+                };
+
+                // 验证必填项
+                if (!formData.userName) {
+                    Toast.warning('请输入您的姓名');
+                    document.getElementById('aboutName').focus();
+                    return;
+                }
+
+                if (!formData.userEmail) {
+                    Toast.warning('请输入您的邮箱地址');
+                    document.getElementById('aboutEmail').focus();
+                    return;
+                }
+
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(formData.userEmail)) {
+                    Toast.warning('请输入有效的邮箱地址');
+                    document.getElementById('aboutEmail').focus();
+                    return;
+                }
+
+                if (!formData.feedbackContent) {
+                    Toast.warning('请输入反馈内容');
+                    document.getElementById('aboutContent').focus();
+                    return;
+                }
+
+                const submitBtn = form.querySelector('button[type="submit"]');
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '⏳ 提交中...';
+
+                setTimeout(() => {
+                    console.log('关于页面反馈数据:', formData);
+                    Toast.success('感谢您的反馈！我们会认真对待每一条建议');
+
+                    // 隐藏表单，显示成功提示
+                    form.style.display = 'none';
+                    successEl.classList.add('show');
+
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = '📨 提交反馈';
+                }, 1500);
+            });
+        })();
+    </script>
+</body>
+</html>
