@@ -299,46 +299,237 @@ class Translator {
 
     /* ==================== 核心翻译 ==================== */
     async translate() {
-        if (this.isTranslating) return;
+    if (this.isTranslating) return;
 
-        const text = this.sourceText?.value?.trim();
-        if (!text) {
-            Toast.warning('请输入要翻译的文本');
-            this.sourceText?.focus();
-            return;
-        }
+    const text = this.sourceText?.value?.trim();
+    if (!text) {
+        Toast.warning('请输入要翻译的文本');
+        this.sourceText?.focus();
+        return;
+    }
 
-        const srcLang = this.sourceLang.value;
-        const tgtLang = this.targetLang.value;
+    const srcLang = this.sourceLang.value;
+    const tgtLang = this.targetLang.value;
 
-        if (srcLang !== 'auto' && srcLang === tgtLang) {
-            Toast.warning('源语言和目标语言不能相同');
-            return;
-        }
+    if (srcLang !== 'auto' && srcLang === tgtLang) {
+        Toast.warning('源语言和目标语言不能相同');
+        return;
+    }
 
-        this.isTranslating = true;
-        this.showLoading();
+    this.isTranslating = true;
+    this.showLoading();
+
+    try {
+        const translatedText = await this.callCozeAPI(text, srcLang, tgtLang);
+        this.showResult(translatedText);
+
+        const actualSrc = srcLang === 'auto' ? this.detectLang(text) : srcLang;
+        this.addHistory(text, translatedText, actualSrc, tgtLang);
+        Toast.success('翻译完成');
+    } catch (err) {
+        console.error('翻译错误:', err);
 
         try {
-            // 模拟网络延迟 800-1200ms
-            await this.delay(800 + Math.random() * 400);
-
+            Toast.warning('API不可用，使用离线模式');
             const translatedText = this.mockTranslate(text, srcLang, tgtLang);
             this.showResult(translatedText);
-
-            // 添加到历史
             const actualSrc = srcLang === 'auto' ? this.detectLang(text) : srcLang;
             this.addHistory(text, translatedText, actualSrc, tgtLang);
-
-            Toast.success('翻译完成');
-        } catch (err) {
-            console.error('翻译错误:', err);
+            Toast.info('离线翻译完成');
+        } catch (fallbackErr) {
             Toast.error('翻译失败，请重试');
-        } finally {
-            this.isTranslating = false;
-            this.hideLoading();
+        }
+    } finally {
+        this.isTranslating = false;
+        this.hideLoading();
+    }
+}
+
+// ====== 调用扣子API（stream 模式直接获取结果） ======
+async callCozeAPI(text, srcLang, tgtLang) {
+    const COZE_CONFIG = {
+        apiKey: 'pat_cJG3jgqZQQc6G3Jkvg4oSvUOnVcB9qxYAIRInjkiOxZHlGWGFxcXAV8qdN7kavvj',
+        botId: '7657108725542731816',
+        apiUrl: 'https://api.coze.cn/v3/chat'
+    };
+
+    const langMap = {
+        'zh': '中文', 'en': '英语', 'ja': '日语',
+        'ko': '韩语', 'fr': '法语', 'de': '德语', 'es': '西班牙语'
+    };
+    const targetName = langMap[tgtLang] || tgtLang;
+
+    const response = await fetch(COZE_CONFIG.apiUrl, {
+        method: 'POST',
+        headers: {
+            'Authorization': `Bearer ${COZE_CONFIG.apiKey}`,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            bot_id: COZE_CONFIG.botId,
+            user_id: 'user_' + Date.now(),
+            stream: true,
+            additional_messages: [{
+                role: 'user',
+                content: `翻译成${targetName}：${text}`,
+                content_type: 'text'
+            }]
+        })
+    });
+
+    if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(`HTTP ${response.status}: ${errorText}`);
+    }
+
+    // 读取 SSE 流
+    const reader = response.body.getReader();
+    const decoder = new TextDecoder();
+    let buffer = '';
+    let result = '';
+    let done = false;
+
+    while (!done) {
+        const { value, done: readerDone } = await reader.read();
+        done = readerDone;
+
+        if (value) {
+            buffer += decoder.decode(value, { stream: true });
+            const lines = buffer.split('\n');
+            buffer = lines.pop() || '';
+
+            for (const line of lines) {
+                const trimmed = line.trim();
+                if (!trimmed || !trimmed.startsWith('data:')) continue;
+
+                const jsonStr = trimmed.substring(5).trim();
+                if (jsonStr === '[DONE]') break;
+
+                try {
+                    const eventData = JSON.parse(jsonStr);
+
+                    // Coze v3: assistant 的 answer 消息，delta 无 created_at（拼接），最终版有 created_at（覆盖）
+                    if (eventData.role === 'assistant' && eventData.type === 'answer' && eventData.content) {
+                        if (eventData.created_at) {
+                            result = eventData.content;
+                        } else {
+                            result += eventData.content;
+                        }
+                    }
+                } catch (e) {
+                    // 忽略解析失败
+                }
+            }
         }
     }
+
+    if (result && result.trim()) {
+        return result.trim();
+    }
+
+    // SSE 未获取到结果，降级到轮询
+    return await this._pollForResult(COZE_CONFIG, text, srcLang, tgtLang);
+}
+
+// ====== 降级方案：轮询模式 ======
+async _pollForResult(COZE_CONFIG, text, srcLang, tgtLang) {
+    const langMap = {
+        'zh': '中文', 'en': '英语', 'ja': '日语',
+        'ko': '韩语', 'fr': '法语', 'de': '德语', 'es': '西班牙语'
+    };
+    const targetName = langMap[tgtLang] || tgtLang;
+
+    const response = await fetch(COZE_CONFIG.apiUrl, {
+        method: 'POST',
+        headers: {
+            'Authorization': `Bearer ${COZE_CONFIG.apiKey}`,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            bot_id: COZE_CONFIG.botId,
+            user_id: 'user_' + Date.now(),
+            stream: false,
+            additional_messages: [{
+                role: 'user',
+                content: `翻译成${targetName}：${text}`,
+                content_type: 'text'
+            }]
+        })
+    });
+
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    const data = await response.json();
+    if (data.code !== 0) throw new Error(data.msg || 'API返回错误');
+
+    const chatId = data.data?.id;
+    const conversationId = data.data?.conversation_id;
+    if (!chatId || !conversationId) throw new Error('未获取到会话ID');
+
+    let attempts = 0;
+    const maxAttempts = 30;
+
+    while (attempts < maxAttempts) {
+        await new Promise(r => setTimeout(r, 2000));
+        attempts++;
+
+        const statusRes = await fetch(
+            `https://api.coze.cn/v3/chat/retrieve?chat_id=${chatId}&conversation_id=${conversationId}`,
+            { headers: { 'Authorization': `Bearer ${COZE_CONFIG.apiKey}` } }
+        );
+
+        if (!statusRes.ok) continue;
+        const statusData = await statusRes.json();
+        const status = statusData?.data?.status;
+        const lastError = statusData?.data?.last_error;
+
+        if (status === 'requires_action') {
+            throw new Error('翻译服务需要人工介入，请检查Bot配置');
+        }
+
+        if (status === 'in_progress' || status === 'created' || status === 'queued') {
+            continue;
+        }
+
+        if (status === 'failed') {
+            const errMsg = lastError?.msg || '';
+            throw new Error('翻译请求失败: ' + errMsg);
+        }
+
+        if (status === 'completed' || status === 'completed_but_need_confirm') {
+            const msgRes = await fetch(
+                `https://api.coze.cn/v3/chat/message/list?chat_id=${chatId}&conversation_id=${conversationId}`,
+                {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${COZE_CONFIG.apiKey}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        chat_id: chatId,
+                        conversation_id: conversationId
+                    })
+                }
+            );
+            if (msgRes.ok) {
+                const msgData = await msgRes.json();
+                if (msgData.code === 0 && msgData.data) {
+                    const assistant = msgData.data.find(m =>
+                        m.role === 'assistant' && (m.type === 'answer' || m.type === 'verbose')
+                    );
+                    if (assistant?.content) return assistant.content;
+
+                    const anyAssistant = msgData.data.find(m =>
+                        m.role === 'assistant' && m.content
+                    );
+                    if (anyAssistant?.content) return anyAssistant.content;
+                }
+            }
+            break;
+        }
+    }
+
+    throw new Error('翻译超时，请重试');
+}
 
     /* ---------- 检测语言（简化模拟） ---------- */
     detectLang(text) {
@@ -640,7 +831,6 @@ function initFeedbackForm() {
         submitBtn.innerHTML = '⏳ 提交中...';
 
         setTimeout(() => {
-            console.log('反馈数据:', formData);
             Toast.success('感谢您的反馈！我们会认真对待每一条建议');
             feedbackForm.reset();
             submitBtn.disabled = false;
