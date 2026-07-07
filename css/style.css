@@ -1158,6 +1158,28 @@ input, textarea, select {
     color: var(--text-muted);
 }
 
+/* 历史记录类型标签 */
+.history-type-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 2px 8px;
+    border-radius: var(--radius-full);
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+}
+
+.history-type-translate {
+    background: rgba(37, 99, 235, 0.1);
+    color: var(--primary-blue);
+}
+
+.history-type-polish {
+    background: rgba(139, 92, 246, 0.1);
+    color: var(--accent-purple);
+}
+
 .history-empty {
     text-align: center;
     padding: var(--spacing-2xl);
@@ -1299,6 +1321,19 @@ input, textarea, select {
 .result-action-btn:hover {
     border-color: var(--primary-blue);
     color: var(--primary-blue);
+}
+
+/* 润色按钮特殊样式 */
+.result-action-polish {
+    background: rgba(139, 92, 246, 0.1);
+    border-color: var(--accent-purple);
+    color: var(--accent-purple);
+}
+
+.result-action-polish:hover {
+    background: var(--accent-purple);
+    color: white;
+    border-color: var(--accent-purple);
 }
 
 /* ===== 深色模式下轮播图适配 ===== */
@@ -2338,4 +2373,237 @@ textarea {
 :focus-visible {
     outline: 2px solid var(--primary-blue);
     outline-offset: 2px;
+}
+
+/* ===================================================================
+   AI润色功能样式
+   =================================================================== */
+
+/* ===== 润色区域整体 ===== */
+.polish-section {
+    background: linear-gradient(135deg, var(--bg-card) 0%, rgba(139, 92, 246, 0.03) 100%);
+    border: 1px solid rgba(139, 92, 246, 0.1);
+}
+
+/* ===== 润色容器布局 ===== */
+.polish-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-xl);
+    align-items: start;
+}
+
+/* ===== 润色输入区域 ===== */
+.polish-input-area {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+}
+
+/* ===== 润色风格选择器 ===== */
+.polish-style-selector {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+.style-description {
+    font-size: 0.85rem;
+    color: var(--accent-purple);
+    padding: var(--spacing-sm) var(--spacing-md);
+    background: rgba(139, 92, 246, 0.08);
+    border-radius: var(--radius-md);
+    border-left: 3px solid var(--accent-purple);
+    display: none;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ===== 润色按钮特殊样式 ===== */
+.action-btn-polish {
+    background: linear-gradient(135deg, var(--accent-purple) 0%, #a78bfa 100%);
+    color: white;
+    box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
+}
+
+.action-btn-polish:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(139, 92, 246, 0.4);
+}
+
+.action-btn-polish:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+/* ===== 润色结果区域 ===== */
+.polish-result-area-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+.polish-result-area {
+    background: var(--bg-secondary);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+    min-height: 300px;
+    border: 2px dashed rgba(139, 92, 246, 0.3);
+    transition: all var(--transition-normal);
+}
+
+.polish-result-area:hover {
+    border-color: var(--accent-purple);
+}
+
+/* ===== 润色结果占位符 ===== */
+.polish-result-placeholder {
+    color: var(--gray-400);
+    text-align: center;
+    padding: var(--spacing-3xl) var(--spacing-xl);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-md);
+}
+
+.polish-result-placeholder p:first-child {
+    font-size: 3rem;
+    opacity: 0.6;
+}
+
+.polish-result-placeholder p:last-child {
+    font-size: 1rem;
+}
+
+/* ===== 润色加载状态 ===== */
+.polish-loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-md);
+    padding: var(--spacing-3xl);
+}
+
+.polish-loading .loading-spinner {
+    width: 48px;
+    height: 48px;
+    border: 4px solid rgba(139, 92, 246, 0.2);
+    border-top-color: var(--accent-purple);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+.polish-loading .loading-text {
+    color: var(--accent-purple);
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.polish-loading .loading-hint {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+}
+
+/* ===== 润色结果内容 ===== */
+.polish-result-header {
+    margin-bottom: var(--spacing-md);
+    padding-bottom: var(--spacing-md);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.polish-result-style {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    padding: var(--spacing-xs) var(--spacing-md);
+    background: rgba(139, 92, 246, 0.1);
+    color: var(--accent-purple);
+    border-radius: var(--radius-full);
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.polish-result-content {
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: var(--text-primary);
+}
+
+.polish-result-text {
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+/* ===== 润色错误状态 ===== */
+.polish-error {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-md);
+    padding: var(--spacing-3xl);
+    color: var(--error-red);
+}
+
+.polish-error-icon {
+    font-size: 2.5rem;
+}
+
+.polish-error-message {
+    font-size: 0.95rem;
+    text-align: center;
+}
+
+/* ===== 深色模式适配 ===== */
+[data-theme="dark"] .polish-section {
+    background: linear-gradient(135deg, var(--bg-card) 0%, rgba(139, 92, 246, 0.05) 100%);
+    border-color: rgba(139, 92, 246, 0.2);
+}
+
+[data-theme="dark"] .style-description {
+    background: rgba(139, 92, 246, 0.15);
+}
+
+[data-theme="dark"] .polish-result-area {
+    border-color: rgba(139, 92, 246, 0.4);
+}
+
+[data-theme="dark"] .polish-result-placeholder p:first-child {
+    opacity: 0.4;
+}
+
+[data-theme="dark"] .polish-loading .loading-spinner {
+    border-color: rgba(139, 92, 246, 0.3);
+    border-top-color: var(--accent-purple);
+}
+
+[data-theme="dark"] .polish-result-style {
+    background: rgba(139, 92, 246, 0.2);
+}
+
+/* ===== 响应式设计 ===== */
+@media (max-width: 768px) {
+    .polish-container {
+        grid-template-columns: 1fr;
+    }
+
+    .polish-result-area {
+        min-height: 200px;
+    }
+
+    .polish-loading {
+        padding: var(--spacing-2xl);
+    }
+
+    .polish-error {
+        padding: var(--spacing-2xl);
+    }
 }

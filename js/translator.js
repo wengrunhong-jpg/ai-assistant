@@ -258,6 +258,8 @@ class Translator {
             `;
         }
         this.copyBtn && (this.copyBtn.style.display = 'none');
+        const polishFromTranslationBtn = document.getElementById('polishFromTranslationBtn');
+        polishFromTranslationBtn && (polishFromTranslationBtn.style.display = 'none');
         Toast.info('已清空');
     }
 
@@ -324,7 +326,7 @@ class Translator {
         this.showResult(translatedText);
 
         const actualSrc = srcLang === 'auto' ? this.detectLang(text) : srcLang;
-        this.addHistory(text, translatedText, actualSrc, tgtLang);
+        this.addHistory(text, translatedText, actualSrc, tgtLang, 'translate');
         Toast.success('翻译完成');
     } catch (err) {
         console.error('翻译错误:', err);
@@ -334,7 +336,7 @@ class Translator {
             const translatedText = this.mockTranslate(text, srcLang, tgtLang);
             this.showResult(translatedText);
             const actualSrc = srcLang === 'auto' ? this.detectLang(text) : srcLang;
-            this.addHistory(text, translatedText, actualSrc, tgtLang);
+            this.addHistory(text, translatedText, actualSrc, tgtLang, 'translate');
             Toast.info('离线翻译完成');
         } catch (fallbackErr) {
             Toast.error('翻译失败，请重试');
@@ -349,7 +351,10 @@ class Translator {
 async callCozeAPI(text, srcLang, tgtLang) {
     const COZE_CONFIG = {
         apiKey: 'pat_cJG3jgqZQQc6G3Jkvg4oSvUOnVcB9qxYAIRInjkiOxZHlGWGFxcXAV8qdN7kavvj',
-        botId: '7657108725542731816',
+        bots: {
+        translate: '7657108725542731816',
+        polish: '7659704340340965416'
+    },
         apiUrl: 'https://api.coze.cn/v3/chat'
     };
 
@@ -366,7 +371,7 @@ async callCozeAPI(text, srcLang, tgtLang) {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            bot_id: COZE_CONFIG.botId,
+            bot_id: COZE_CONFIG.bots.translate,
             user_id: 'user_' + Date.now(),
             stream: true,
             additional_messages: [{
@@ -446,7 +451,7 @@ async _pollForResult(COZE_CONFIG, text, srcLang, tgtLang) {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            bot_id: COZE_CONFIG.botId,
+            bot_id: COZE_CONFIG.bots.translate,
             user_id: 'user_' + Date.now(),
             stream: false,
             additional_messages: [{
@@ -595,6 +600,7 @@ async _pollForResult(COZE_CONFIG, text, srcLang, tgtLang) {
             <div class="result-actions" style="display:none;">
                 <button class="result-action-btn" id="inlineCopyBtn" title="复制结果">📋 复制结果</button>
                 <button class="result-action-btn" id="inlineClearBtn" title="清空结果">🗑️ 清空</button>
+                <button class="result-action-btn result-action-polish" id="inlinePolishBtn" title="润色这段文字">✍️ 润色这段文字</button>
             </div>
         `;
 
@@ -615,11 +621,29 @@ async _pollForResult(COZE_CONFIG, text, srcLang, tgtLang) {
         // 绑定内联按钮
         const inlineCopy = document.getElementById('inlineCopyBtn');
         const inlineClear = document.getElementById('inlineClearBtn');
+        const inlinePolish = document.getElementById('inlinePolishBtn');
         inlineCopy && inlineCopy.addEventListener('click', () => this.copyResult());
         inlineClear && inlineClear.addEventListener('click', () => this.clearAll());
+        inlinePolish && inlinePolish.addEventListener('click', () => this.polishTranslation());
 
-        // 显示外部复制按钮
+        // 显示外部复制按钮和润色按钮
         this.copyBtn && (this.copyBtn.style.display = 'inline-flex');
+        const polishFromTranslationBtn = document.getElementById('polishFromTranslationBtn');
+        polishFromTranslationBtn && (polishFromTranslationBtn.style.display = 'inline-flex');
+    }
+
+    /* ---------- 润色翻译结果 ---------- */
+    polishTranslation() {
+        const resultText = this.resultArea?.querySelector('.result-text') || this.resultArea?.querySelector('.result-typing-area span');
+        if (resultText && resultText.textContent.trim()) {
+            if (window.polisher) {
+                window.polisher.importFromTranslation(resultText.textContent.trim());
+            } else {
+                Toast.error('润色功能未加载，请刷新页面重试');
+            }
+        } else {
+            Toast.warning('没有可润色的翻译结果');
+        }
     }
 
     /* ==================== 翻译历史 ==================== */
@@ -635,9 +659,10 @@ async _pollForResult(COZE_CONFIG, text, srcLang, tgtLang) {
         localStorage.setItem('translator_history', JSON.stringify(this.history));
     }
 
-    addHistory(source, target, srcLang, tgtLang) {
+    addHistory(source, target, srcLang, tgtLang, type = 'translate') {
         const entry = {
             id: Date.now(),
+            type,
             source: source.length > 100 ? source.substring(0, 100) + '...' : source,
             target: target.length > 100 ? target.substring(0, 100) + '...' : target,
             srcLang,
@@ -669,14 +694,38 @@ async _pollForResult(COZE_CONFIG, text, srcLang, tgtLang) {
             this.historyList.innerHTML = `
                 <div class="history-empty">
                     <div class="history-empty-icon">📝</div>
-                    <p>暂无翻译历史</p>
-                    <p style="font-size: 0.85rem; margin-top: 4px;">翻译记录将显示在这里</p>
+                    <p>暂无操作历史</p>
+                    <p style="font-size: 0.85rem; margin-top: 4px;">翻译和润色记录将显示在这里</p>
                 </div>
             `;
             return;
         }
 
         this.historyList.innerHTML = this.history.map(item => {
+            const isPolish = item.type === 'polish';
+            const typeTag = isPolish
+                ? '<span class="history-type-tag history-type-polish">✨ 润色</span>'
+                : '<span class="history-type-tag history-type-translate">🔤 翻译</span>';
+
+            if (isPolish) {
+                const styleName = (typeof POLISH_STYLES !== 'undefined' && POLISH_STYLES[item.tgtLang]?.name) || item.tgtLang;
+                return `
+                    <div class="history-item">
+                        <div class="history-source">
+                            <div class="history-lang">${typeTag} ${styleName}风格</div>
+                            <div>${this.escapeHtml(item.source)}</div>
+                        </div>
+                        <div class="history-arrow">→</div>
+                        <div class="history-target">
+                            <div>${this.escapeHtml(item.target)}</div>
+                            <div class="history-meta">
+                                <span class="history-time">${item.time}</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+
             const srcName = LANGUAGES[item.srcLang]?.name || item.srcLang;
             const tgtName = LANGUAGES[item.tgtLang]?.name || item.tgtLang;
             const srcFlag = LANGUAGES[item.srcLang]?.flag || '🌐';
@@ -684,7 +733,7 @@ async _pollForResult(COZE_CONFIG, text, srcLang, tgtLang) {
             return `
                 <div class="history-item">
                     <div class="history-source">
-                        <div class="history-lang">${srcFlag} ${srcName}</div>
+                        <div class="history-lang">${typeTag} ${srcFlag} ${srcName}</div>
                         <div>${this.escapeHtml(item.source)}</div>
                     </div>
                     <div class="history-arrow">→</div>

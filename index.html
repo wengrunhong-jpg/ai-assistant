@@ -43,6 +43,9 @@
                         <a href="index.html#tool" class="nav-link">🔤 翻译工具</a>
                     </li>
                     <li class="nav-item">
+                        <a href="index.html#polish" class="nav-link">✨ AI润色</a>
+                    </li>
+                    <li class="nav-item">
                         <a href="index.html#feedback" class="nav-link">💬 用户反馈</a>
                     </li>
                     <li class="nav-item">
@@ -179,19 +182,92 @@
                         <button class="action-btn action-btn-copy" id="copyBtn" style="display:none;">
                             📋 复制结果
                         </button>
+                        <button class="action-btn action-btn-polish" id="polishFromTranslationBtn" style="display:none;">
+                            ✍️ 润色这段文字
+                        </button>
                     </div>
 
                     <!-- 翻译历史记录 -->
                     <div class="history-section">
                         <div class="history-header">
-                            <h3 class="history-title">📜 翻译历史 <span id="historyCount">(0)</span></h3>
+                            <h3 class="history-title">📜 操作历史 <span id="historyCount">(0)</span></h3>
                             <button class="history-clear-btn" id="historyClearBtn">🗑️ 清空历史</button>
                         </div>
                         <div class="history-list" id="historyList">
                             <div class="history-empty">
                                 <div class="history-empty-icon">📝</div>
-                                <p>暂无翻译历史</p>
-                                <p style="font-size: 0.85rem; margin-top: 4px;">翻译记录将显示在这里</p>
+                                <p>暂无操作历史</p>
+                                <p style="font-size: 0.85rem; margin-top: 4px;">翻译和润色记录将显示在这里</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- AI润色功能区域 -->
+                <section class="translator-section polish-section" id="polish">
+                    <div class="section-header">
+                        <h2 class="section-title">✨ AI智能润色</h2>
+                        <p class="section-subtitle">选择风格，让AI为您的文字增添光彩</p>
+                    </div>
+
+                    <div class="polish-container">
+                        <!-- 润色输入区域 -->
+                        <div class="polish-input-area">
+                            <div class="text-area-wrapper">
+                                <div class="text-area-label">
+                                    <label class="selector-label">输入文本</label>
+                                    <span class="char-count" id="polishCharCount">0 / 5000</span>
+                                </div>
+                                <textarea
+                                    class="text-area"
+                                    id="polishText"
+                                    placeholder="请输入需要润色的文本...&#10;&#10;可以是翻译结果、邮件草稿、文章段落等任何文字内容"
+                                    maxlength="5000"
+                                ></textarea>
+                            </div>
+
+                            <!-- 润色风格选择 -->
+                            <div class="polish-style-selector">
+                                <div class="text-area-label">
+                                    <label class="selector-label">润色风格</label>
+                                </div>
+                                <select class="language-select" id="polishStyle">
+                                    <!-- 选项由JS动态生成 -->
+                                </select>
+                                <div class="style-description" id="styleDescription"></div>
+                            </div>
+
+                            <!-- 操作按钮 -->
+                            <div class="action-buttons">
+                                <button class="action-btn action-btn-polish" id="polishBtn">
+                                    ✨ 开始润色
+                                </button>
+                                <button class="action-btn action-btn-secondary" id="polishClearBtn">
+                                    🗑️ 清空
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- 润色结果区域 -->
+                        <div class="polish-result-area-wrapper">
+                            <div class="text-area-label">
+                                <label class="selector-label">润色结果</label>
+                            </div>
+                            <div class="polish-result-area" id="polishResultArea">
+                                <div class="polish-result-placeholder">
+                                    <p>✨</p>
+                                    <p>润色结果将在这里显示</p>
+                                </div>
+                            </div>
+
+                            <!-- 结果操作按钮 -->
+                            <div class="action-buttons" id="polishActions" style="display:none;">
+                                <button class="action-btn action-btn-copy" id="polishCopyBtn">
+                                    📋 复制结果
+                                </button>
+                                <button class="action-btn action-btn-secondary" id="polishRedoBtn">
+                                    🔄 重新润色
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -244,9 +320,10 @@
 
                     <div class="media-container">
                         <h3 style="margin-bottom: 16px; color: var(--text-primary);">🎥 产品介绍视频</h3>
-                        <video controls muted autoplay loop style="max-width: 100%; border-radius: 12px;">
-                            <source src="videos/README.md" type="video/mp4">
-                            您的浏览器不支持视频播放。
+                        <video controls muted autoplay loop style="max-width: 100%; border-radius: 12px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                            <!-- 请将实际视频文件放到 videos/ 目录，然后取消注释下面这行 -->
+                            <!-- <source src="videos/demo.mp4" type="video/mp4"> -->
+                            <p style="padding: 60px 20px; text-align: center; color: #fff;">🎬 视频加载中...<br><small>请添加 videos/demo.mp4 文件</small></p>
                         </video>
                         <p class="media-caption">实时翻译助手功能演示视频</p>
                     </div>
@@ -254,8 +331,9 @@
                     <div class="media-container">
                         <h3 style="margin-bottom: 16px; color: var(--text-primary);">🎵 背景音乐</h3>
                         <audio controls style="width: 100%; max-width: 400px;">
-                            <source src="audios/README.md" type="audio/mpeg">
-                            您的浏览器不支持音频播放。
+                            <!-- 请将实际音频文件放到 audios/ 目录，然后取消注释下面这行 -->
+                            <!-- <source src="audios/background.mp3" type="audio/mpeg"> -->
+                            <p style="padding: 20px; text-align: center; color: var(--text-secondary);">🎵 请添加 audios/background.mp3 文件</p>
                         </audio>
                         <p class="media-caption">轻松背景音乐，营造愉悦翻译氛围</p>
                     </div>
@@ -351,6 +429,7 @@
     <!-- 引入脚本 -->
     <script src="js/carousel.js"></script>
     <script src="js/translator.js"></script>
+    <script src="js/polisher.js"></script>
     <script src="js/enhancements.js"></script>
 </body>
 </html>
